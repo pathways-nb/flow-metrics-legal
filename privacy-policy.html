@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Flow Metrics &amp; Forecasting</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header class="site-header">
+    <div class="brand">Published by <a href="https://yourpaths.eu">pathways</a></div>
+  </header>
+
+  <div class="doc-nav">
+    <a href="index.html">Legal index</a>
+    <a href="eula.html">EULA</a>
+  </div>
+
+  <h1>Privacy Policy — Flow Metrics &amp; Forecasting</h1>
+  <p class="meta">Effective date: [DATE OF PUBLICATION] &middot; Last updated: 2026-08-22</p>
+
+  <div class="draft-notice">
+    <strong>Draft — not legal advice.</strong> The data-practice descriptions below
+    (what the app reads, stores, and does not read/store) were verified directly
+    against the app's source code, not assumed or templated. The legal framing (GDPR
+    role, retention language, your-rights section) is a reasonable starting draft, not
+    a substitute for review by a lawyer qualified in Greek/EU data protection law
+    before this is relied on. Placeholders in <code>[BRACKETS]</code> will be filled
+    in before this notice is removed.
+  </div>
+
+  <h2>1. Who we are</h2>
+  <p>Flow Metrics &amp; Forecasting ("the App") is developed and published by:</p>
+  <p>
+    <strong>Pathways Consulting Services P.C. (Ι.Κ.Ε.)</strong> — <a href="https://yourpaths.eu">pathways</a><br>
+    Registered in Greece<br>
+    [REGISTERED ADDRESS]<br>
+    Company registration (ΓΕΜΗ) number: [GEMI NUMBER]<br>
+    VAT / ΑΦΜ: [VAT NUMBER]<br>
+    Contact: <a href="mailto:info@yourpaths.eu">info@yourpaths.eu</a>
+  </p>
+  <p>
+    We are the developer/vendor of the App, distributed via the Atlassian Marketplace
+    and installed on your own Atlassian Jira Cloud site.
+  </p>
+
+  <h2>2. What the App does, in one paragraph</h2>
+  <p>
+    The App reads issue and workflow data from a Jira project you choose to install it
+    on, and turns it into flow-metrics charts (cycle time, cumulative flow, aging work,
+    forecasts) that are rendered <strong>inside Jira</strong>, for users of that same
+    Jira site. It does not have its own website, user accounts, or login — access is
+    entirely governed by your existing Jira permissions.
+  </p>
+
+  <h2>3. What data the App accesses, and why</h2>
+  <table>
+    <thead><tr><th>Data</th><th>Why</th><th>Read as</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Issue fields: summary, status, issue type, created date, resolution date, updated date</td>
+        <td>To compute cycle time, throughput, cumulative flow, and aging metrics</td>
+        <td>The viewing user's own Jira permissions</td>
+      </tr>
+      <tr>
+        <td>Issue status change history (changelog): status transitions and their timestamps</td>
+        <td>Cycle time and aging are measured from when an issue actually moved between statuses</td>
+        <td>The viewing user's own Jira permissions</td>
+      </tr>
+      <tr>
+        <td>Board configuration (name, type, saved filter)</td>
+        <td>To determine which issues belong to the board being viewed</td>
+        <td>The App's own identity (so any user who can see the board gets correct results, not just board admins)</td>
+      </tr>
+      <tr>
+        <td>Jira site timezone</td>
+        <td>So "what counts as a day" matches what Jira itself reports, identically for every viewer</td>
+        <td>The App's own identity</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    <strong>How we verified this:</strong> the App's Jira API layer explicitly
+    restricts every Jira issue request to the field list above — the App does not
+    request Jira to return any other issue field.
+  </p>
+
+  <h2>4. What the App deliberately does not access</h2>
+  <ul>
+    <li><strong>No assignee, reporter, or any user-identifying field.</strong> The App's
+      Jira permissions intentionally exclude the scope Jira requires to resolve user
+      profile information. The App's code never reads, parses, stores, or displays an
+      assignee, reporter, watcher, or commenter, on any issue.</li>
+    <li><strong>No issue description, comments, or attachments.</strong></li>
+    <li><strong>Changelog "author" data is never used</strong>, even though Jira's API
+      technically includes it. Jira's changelog format includes who made each change
+      alongside what changed. The App's code extracts only the status field change and
+      its timestamp from each changelog entry — the author field is present in the raw
+      network response but is never read, stored, or rendered anywhere in the App,
+      including in the per-issue "raw changelog" detail view (which shows only the
+      App's own extracted from/to/timestamp data, not Jira's raw response).</li>
+  </ul>
+
+  <h2>5. Where your data goes</h2>
+  <p>
+    <strong>Nowhere outside Atlassian.</strong> The App has no servers of its own,
+    makes no calls to any third party, and uses no analytics, advertising, or tracking
+    service of any kind. All Jira API calls happen either directly from your browser
+    (as you) or from the App's backend function running on Atlassian's own Forge
+    platform (as the App) — both stay entirely within Atlassian's infrastructure. This
+    is why the App qualifies for Atlassian's <strong>"Runs on Atlassian"</strong>
+    program, which specifically certifies that an app has no external network egress.
+  </p>
+  <p>
+    We (pathways) never receive, see, or have access to your Jira issue data. There is
+    no database of ours that your data passes through.
+  </p>
+
+  <h2>6. What the App stores, and where</h2>
+  <ul>
+    <li><strong>Project-level configuration</strong>, stored in Atlassian's own Forge
+      key-value storage (physically hosted by Atlassian, not by us): your chosen
+      status-to-stage mapping, saved date-range preference, and any issues you've
+      manually excluded from metrics. This is configuration about how to display your
+      board, not your issue content — no issue summaries, descriptions, or user data
+      are stored here. It is shared per-project (visible to any project member), not
+      tied to an individual user account.</li>
+    <li><strong>A local browser cache</strong> (IndexedDB, inside your own browser, on
+      your own device): a copy of the same limited issue fields listed in §3, kept only
+      to make reopening the App faster. This never leaves your browser and is not
+      something we have access to.</li>
+  </ul>
+
+  <h2>7. How long we keep data, and what happens if you uninstall</h2>
+  <p>
+    Because all storage described in §6 lives in Atlassian's own Forge platform (not
+    ours), data lifecycle is governed by Atlassian's platform policy, not a policy we
+    control: uninstalling the App marks its stored configuration for deletion,
+    following Atlassian's standard Forge hosted-storage retention/deletion process (see
+    <a href="https://developer.atlassian.com/platform/forge/storage-reference/hosted-storage-data-lifecycle/">Atlassian's
+    Forge storage data lifecycle documentation</a> for Atlassian's current,
+    authoritative retention timeline — subject to change on Atlassian's side, not
+    ours). We do not separately retain a copy anywhere.
+  </p>
+
+  <h2>8. Your rights</h2>
+  <p>
+    Because the App does not process personal data about identifiable individuals (see
+    §4), there is generally very little personal data for us to act on. To the extent
+    GDPR or similar law applies to any data connected with your use of the App, you can
+    contact us at <a href="mailto:info@yourpaths.eu">info@yourpaths.eu</a> to ask about
+    access, correction, or deletion, and we will respond consistent with applicable
+    law. For your underlying Jira data itself, your Jira site administrator (your
+    organization) is the controller — the App only reads it under permissions your
+    organization already granted.
+  </p>
+
+  <h2>9. Sub-processors / third parties</h2>
+  <p>
+    <strong>Atlassian</strong> (as the hosting platform for Forge, the infrastructure
+    the App runs on) is the only third party involved, and it is the platform your
+    organization has independently chosen and contracted with by using Jira Cloud. We
+    do not add any other sub-processor, vendor, or third-party service.
+  </p>
+
+  <h2>10. Children's privacy</h2>
+  <p>
+    The App is a business tool for use within an organization's Jira instance and is
+    not directed at, or knowingly used by, children.
+  </p>
+
+  <h2>11. Changes to this policy</h2>
+  <p>
+    We will update the "Last updated" date above when this policy changes, and post the
+    updated version at the same location. Material changes will be reflected in the
+    Atlassian Marketplace listing.
+  </p>
+
+  <h2>12. Contact</h2>
+  <p>
+    Questions about this policy or the App's data practices:
+    <a href="mailto:info@yourpaths.eu">info@yourpaths.eu</a>
+  </p>
+
+  <footer class="site-footer">
+    Published by <a href="https://yourpaths.eu">pathways</a> (Pathways Consulting
+    Services P.C.) &middot; <a href="eula.html">EULA</a> &middot;
+    <a href="index.html">Back to legal index</a>
+  </footer>
+</div>
+</body>
+</html>
