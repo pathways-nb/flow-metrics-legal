@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security Policy — FlowPaths</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header class="site-header">
+    <div class="brand">Published by <a href="https://yourpaths.eu">pathways</a></div>
+  </header>
+
+  <div class="doc-nav">
+    <a href="index.html">Legal index</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="eula.html">EULA</a>
+  </div>
+
+  <h1>Security Policy — FlowPaths</h1>
+  <p class="meta">Effective date: 2026-08-22 &middot; Last updated: 2026-08-22</p>
+
+  <h2>1. Scope of this document</h2>
+  <p>
+    This page describes how FlowPaths ("the App") is built and operated with respect to
+    security, and how to report a security concern. It complements, and should be read
+    alongside, our <a href="privacy-policy.html">Privacy Policy</a>, which covers what
+    data the App accesses and why.
+  </p>
+
+  <h2>2. Least-privilege access</h2>
+  <p>
+    The App requests the smallest set of Jira permissions ("scopes") it needs to
+    function, and nothing more:
+  </p>
+  <ul>
+    <li><code>read:jira-work</code>, <code>read:project:jira</code>,
+      <code>read:board-scope:jira-software</code>,
+      <code>read:board-scope.admin:jira-software</code>,
+      <code>read:filter:jira</code> — all read-only, used to read issues, board
+      configuration, and saved filters.</li>
+    <li><code>storage:app</code> — used only to save the small per-project
+      configuration described in our Privacy Policy §6 (status mapping, excluded
+      issues).</li>
+  </ul>
+  <p>
+    Notably absent: <strong>the App does not request <code>read:jira-user</code></strong>,
+    the scope Jira requires to resolve assignee, reporter, or other user-identifying
+    fields. This is a deliberate design choice, not an oversight — the App has no code
+    path that reads, stores, or displays that information, because it was never granted
+    the permission to access it in the first place.
+  </p>
+
+  <h2>3. Read-only by design</h2>
+  <p>
+    Every Jira API call the App makes is a read (GET/search). The App never creates,
+    edits, or deletes anything in your Jira instance — it has no write scopes at all.
+  </p>
+
+  <h2>4. No credentials, ever</h2>
+  <p>
+    The App never asks a user for a password, API token, or Personal Access Token (PAT).
+    Authentication and authorization are handled entirely by Atlassian's Forge platform:
+    the App runs under Atlassian's own identity model, and every request is executed
+    either as the viewing user (respecting that user's existing Jira permissions) or as
+    the App's own scoped identity — never with a credential a user has to type in or
+    store.
+  </p>
+
+  <h2>5. Server-side authorization checks</h2>
+  <p>
+    Configuration reads and writes (status mapping, excluded issues) are scoped to a
+    project using the project key from the request's own trusted Forge context, not a
+    value supplied by the client — so one project's configuration cannot be read or
+    overwritten by a request claiming to be a different project. Board-level data
+    reads are independently cross-checked against that same trusted context before
+    being served, to prevent a request for one board's data being satisfied with
+    another board's configuration.
+  </p>
+
+  <h2>6. No external network calls</h2>
+  <p>
+    The App makes no calls to any server outside Atlassian's own infrastructure — no
+    analytics, no third-party APIs, no external logging or monitoring service. This is
+    why the App is eligible for Atlassian's <strong>"Runs on Atlassian"</strong>
+    program, which specifically certifies apps with zero external network egress.
+    There is nothing for the App to leak data to, because it has nowhere else to send
+    it.
+  </p>
+
+  <h2>7. Dependency management</h2>
+  <p>
+    The App's dependencies are kept current, and known vulnerabilities identified
+    through standard tooling (<code>npm audit</code>) are reviewed and remediated
+    promptly rather than left outstanding.
+  </p>
+
+  <h2>8. Platform security</h2>
+  <p>
+    The App is built entirely on Atlassian's Forge platform, and inherits Forge's own
+    sandboxing, hosting, and infrastructure security — the App has no servers, databases,
+    or infrastructure of its own to secure or misconfigure.
+  </p>
+
+  <h2>9. Reporting a security issue</h2>
+  <p>
+    If you believe you've found a security vulnerability in the App, please email
+    <a href="mailto:info@yourpaths.eu">info@yourpaths.eu</a> with details. We aim to
+    acknowledge reports promptly and will work with you to understand and address the
+    issue. Please report privately by email rather than in a public issue tracker or
+    forum, to give us a chance to address it before wider disclosure.
+  </p>
+
+  <h2>10. Changes to this policy</h2>
+  <p>
+    We will update the "Last updated" date above when this policy changes, and post the
+    updated version at the same location.
+  </p>
+
+  <footer class="site-footer">
+    Published by <a href="https://yourpaths.eu">pathways</a> (Pathways Consulting
+    Services P.C.) &middot; <a href="privacy-policy.html">Privacy Policy</a> &middot;
+    <a href="eula.html">EULA</a> &middot; <a href="index.html">Back to legal index</a>
+  </footer>
+</div>
+</body>
+</html>
