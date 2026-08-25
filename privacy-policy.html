@@ -111,7 +111,13 @@
       its timestamp from each changelog entry — the author field is present in the raw
       network response but is never read, stored, or rendered anywhere in the App,
       including in the per-issue "raw changelog" detail view (which shows only the
-      App's own extracted from/to/timestamp data, not Jira's raw response).</li>
+      App's own extracted from/to/timestamp data, not Jira's raw response). This is
+      enforced, not just intended: the local browser cache described in §6 is the only
+      place issue data is persisted at all, and everything written to it is reduced to
+      the status change and its timestamp first — dropping both the author and any
+      non-status change (a reassignment, for example, whose values would be user
+      names). That reduction is covered by automated tests, so it cannot silently
+      regress.</li>
   </ul>
 
   <h2>5. Where your data goes</h2>
@@ -139,9 +145,13 @@
       are stored here. It is shared per-project (visible to any project member), not
       tied to an individual user account.</li>
     <li><strong>A local browser cache</strong> (IndexedDB, inside your own browser, on
-      your own device): a copy of the same limited issue fields listed in §3, kept only
+      your own device): a copy of the same limited issue fields listed in §3, plus the
+      status-transition history (which status changed to which, and when), kept only
       to make reopening the App faster. This never leaves your browser and is not
-      something we have access to.</li>
+      something we have access to. Before anything is written to this cache the App
+      strips every changelog entry down to the status change and its timestamp — the
+      author of each change, and any non-status change such as a reassignment, are
+      discarded rather than stored (see §4).</li>
   </ul>
 
   <h2>7. How long we keep data, and what happens if you uninstall</h2>
