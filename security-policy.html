@@ -22,11 +22,12 @@
     <a href="https://pathways-nb.github.io/flowpaths-docs/getting-started.html">Getting Started</a>
 
     <h4>Features</h4>
-    <a href="https://pathways-nb.github.io/flowpaths-docs/dashboard.html">Dashboard</a>
-    <a href="https://pathways-nb.github.io/flowpaths-docs/scatterplot.html">Cycle Time Scatterplot</a>
-    <a href="https://pathways-nb.github.io/flowpaths-docs/cumulative-flow.html">Cumulative Flow Diagram</a>
-    <a href="https://pathways-nb.github.io/flowpaths-docs/aging-wip.html">Aging WIP</a>
-    <a href="https://pathways-nb.github.io/flowpaths-docs/forecast.html">Forecast (Monte Carlo)</a>
+    <a href="https://pathways-nb.github.io/flowpaths-docs/dashboard.html">Overview</a>
+    <a href="https://pathways-nb.github.io/flowpaths-docs/scatterplot.html">Cycle time</a>
+    <a href="https://pathways-nb.github.io/flowpaths-docs/cumulative-flow.html">CFD</a>
+    <a href="https://pathways-nb.github.io/flowpaths-docs/aging-wip.html">Aging</a>
+    <a href="https://pathways-nb.github.io/flowpaths-docs/forecast.html">Forecast</a>
+    <a href="https://pathways-nb.github.io/flowpaths-docs/review.html">Review</a>
 
     <h4>Reference</h4>
     <a href="https://pathways-nb.github.io/flowpaths-docs/configuration.html">Configuration &amp; Filters</a>
@@ -41,7 +42,7 @@
 
   <main class="content">
   <h1>Security Policy — FlowPaths</h1>
-  <p class="meta">Effective date: 2026-08-22 &middot; Last updated: 2026-08-22</p>
+  <p class="meta">Effective date: 2026-08-22 &middot; Last updated: 2026-11-18</p>
 
   <h2>1. Scope of this document</h2>
   <p>
@@ -62,9 +63,10 @@
       <code>read:board-scope.admin:jira-software</code>,
       <code>read:filter:jira</code> — all read-only, used to read issues, board
       configuration, and saved filters.</li>
-    <li><code>storage:app</code> — used only to save the small per-project
-      configuration described in our Privacy Policy §6 (status mapping, excluded
-      issues).</li>
+    <li><code>storage:app</code> — used only to save the small project and board
+      configuration described in our Privacy Policy §6 (status mapping, how days are
+      counted, excluded issues, the forecast's capacity plan and the Review tab's
+      settings).</li>
   </ul>
   <p>
     Notably absent: <strong>the App does not request <code>read:jira-user</code></strong>,
